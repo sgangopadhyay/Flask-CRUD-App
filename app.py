@@ -61,7 +61,7 @@ def delete(id):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM new_users WHERE id={}".format(id))
     mysql.connection.commit()
-    return redirect('/allusers')
+    return redirect('/')
 
 @app.route('/edit/<int:id>/', methods=['GET','POST'])
 def edit(id):
