@@ -1,5 +1,7 @@
+# Program : A CRUD application using Python Flask, MySQL and Bootstrap
 # Programmed By : Suman Gangopadhyay
 # Email ID : linuxgurusuman@gmail.com
+# URL : https://www.linkedin.com/in/sumangangopadhyay/ 
 # Date : 15-May-2018
 # Language : Python3.6
 # Framework : Flask
@@ -32,6 +34,7 @@ mysql = MySQL(app)
 
 app.config['SECRET_KEY'] = os.urandom(20)
 
+# Add the route to the Index page of the App
 @app.route('/')
 def index():
     cur =  mysql.connection.cursor()
@@ -40,7 +43,7 @@ def index():
         data = cur.fetchall()
         return render_template('index.html', data=data)
 
-
+# route to add New User
 @app.route('/newuser/', methods = ['GET', 'POST'])
 def newuser():
     if request.method == 'POST':
@@ -62,6 +65,7 @@ def allusers():
         data = cur.fetchall()
         return render_template('allusers.html', data=data)
 
+# Route to Delete an user from the MySQL Database
 @app.route('/delete/<int:id>/')
 def delete(id):
     cur = mysql.connection.cursor()
@@ -69,6 +73,7 @@ def delete(id):
     mysql.connection.commit()
     return redirect('/')
 
+# Edit an user in the MySQL database
 @app.route('/edit/<int:id>/', methods=['GET','POST'])
 def edit(id):
     # Edit the data in the html columns
@@ -90,6 +95,7 @@ def edit(id):
         form['password'] = data['password']
         cur.close()
         return render_template('edit.html', form=form)
-    
+ 
+# Run the main App
 if __name__ == '__main__':
     app.run(debug=True)
